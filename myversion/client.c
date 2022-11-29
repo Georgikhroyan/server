@@ -7,7 +7,7 @@
 #include <unistd.h> // read(), write(), close()
 void echo(int sockfd)
 {
-    char buff[100];
+    char buff[1000];
     int n;
     for (;;) {
         bzero(buff, sizeof(buff));
