@@ -260,9 +260,9 @@ void givenumbers(struct fdstr *fdlist)
   while (fdlist!=NULL)
   {
     (*fdlist).number=i++;
-    sprintf(s,"\r\nGame began!\r\n\r\n");
-		sprintf(s+strlen(s),"Your number is %d\r\n\r\n",(*fdlist).number);
-		sprintf(s+strlen(s),"If you'll need a help, try 'help'\r\n\r\n");
+    sprintf(s,"\r\nИгра началась!\r\n\r\n");
+		sprintf(s+strlen(s),"Ваш номер %d\r\n\r\n",(*fdlist).number);
+		sprintf(s+strlen(s),"Если вам нужна помощь, попробуйте 'help'\r\n\r\n");
     write((*fdlist).fd,s,strlen(s));
     fdlist=(*fdlist).next;
   }
@@ -300,8 +300,8 @@ void print(char c,int kol,int money,int number,struct fdstr *fdlist)
   
   if (c=='s')
 	{
-    sprintf(s,"Player %d sold %d items of products for $%d per item\n",
-                                                          number,kol,money);
+    sprintf(s,"Игрок %d продал %d продукции за $%d  \n",
+                                                          number,kol,money*kol);
     while (fdlist!=NULL)
     {
       write((*fdlist).fd,s,strlen(s));
@@ -310,8 +310,7 @@ void print(char c,int kol,int money,int number,struct fdstr *fdlist)
 	}
   if (c=='b')
 	{
-    sprintf(s,"Player %d bought %d items of raw materials for $%d per\
- item\n",number,kol,money);
+    sprintf(s,"Игрок %d купил %d сырья за $%d \n",number,kol,money*kol);
     while (fdlist!=NULL)
     {
       write((*fdlist).fd,s,strlen(s));
@@ -337,17 +336,17 @@ void help(int fd)
 {
   char s[1024];
   
-  sprintf(s,"This game has next commands:\n");
+  sprintf(s,"В игре есть следуюшие команды:\n");
   sprintf(s+strlen(s),
-                "1. 'market' - Get information about market this month.\n");
+                "1. 'market' -Получите информацию о рынке в этом месяце.\n");
   sprintf(s+strlen(s),
-           "2. 'player N' - Get information about player with N number.\n");
-  sprintf(s+strlen(s),"3. 'prod N' - Produce N items of products at $2000 for each item. Applications for production are summed\n");
-  sprintf(s+strlen(s),"4. 'buy N P' - Purchase N items of raw materials at P price. You can use this command once a month.\n");
-  sprintf(s+strlen(s),"5. 'sell N P' - Sell N items of products at P price. You can use this command once a month.\n");
-  sprintf(s+strlen(s),"6. 'build' - Build a new factory at $2500 instantly and $2500 after three months of construction. You will be able to use it after four months.\n");
-  sprintf(s+strlen(s),"7. 'turn' - Finish vigorous activity this month (you couldn't purchase, sale and build this month).\n");
-  sprintf(s+strlen(s),"8. 'help' - Get help.\n\n> ");
+           "2. 'player N' -Получить информацию об игроке с номером N.\n");
+  sprintf(s+strlen(s),"3. 'prod N' - Произведите N  продукции по 2000 долларов за каждую. Заявки на производство суммируются\n");
+  sprintf(s+strlen(s),"4. 'buy N P' - Закупите N единиц сырья по цене P. Вы можете использовать эту команду один раз в месяц.\n");
+  sprintf(s+strlen(s),"5. 'sell N P' - Продайте N  продукции по цене P. Вы можете использовать эту команду один раз в месяц.\n");
+  sprintf(s+strlen(s),"6. 'build' - Постройте новую фабрику за 2500 долларов сразу и за 2500 долларов после трех месяцев строительства. Вы сможете использовать его через четыре месяца.\n");
+  sprintf(s+strlen(s),"7. 'turn' - Завершите активность в этом месяце (вы не можете покупать, продавать и строить в этом месяце).\n");
+  sprintf(s+strlen(s),"8. 'help' - помощь.\n\n> ");
   write(fd,s,strlen(s));
 }
 
@@ -355,7 +354,7 @@ int correctsell(int fd,int price,int mark)
 {
   if (price>BuySell[mark-1][3])
   {
-    write(fd,"Too high price. Try 'market'\r\n\r\n> ",34);
+    write(fd,"Слишком высокая цена. Попробуйте 'market'\r\n\r\n> ",34);
     return (-1);
   }
   return 0;
@@ -365,7 +364,7 @@ int correctbuy(int fd,int price,int mark)
 {
   if (price<BuySell[mark-1][1])
   {
-    write(fd,"Too low price. Try 'market'\r\n\r\n> ",33);
+    write(fd,"Слишком низкая цена. Попробуйте 'market'\r\n\r\n> ",33);
     return (-1);
   }
   return 0;
