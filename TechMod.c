@@ -5,7 +5,7 @@ void infowait(struct fdstr *fdlist,int i,int maxpl)
 {
   char s[64];
   
-  sprintf(s,"\r\n%d/%d игроков подключено\r\n\r\n",i,maxpl);
+  sprintf(s,"\r\n%d/%d Игроков\r\n\r\n",i,maxpl);
   while (fdlist!=NULL)
   {
     write((*fdlist).fd,s,strlen(s));
@@ -32,7 +32,7 @@ void waitdialog(struct fdstr **fdlist,fd_set readfds,int *i,int maxpl)
         (*p).buf[(*p).bufwght]=0;
         if (strcmp((*p).buf+(*p).bufwght-2,"\r\n")==0)
         {
-          write((*p).fd,"пожалуйста, ждите\r\n",14);
+          write((*p).fd,"Ждите\r\n",13);
           (*p).bufwght=0;
         }
       }
@@ -139,7 +139,7 @@ void gameserv(int port,int maxpl)
           perror("accept");
           exit(1);
         }
-        write(fd,"\r\nИгра уже запущена\r\n\r\n",38  );
+        write(fd,"\r\nИгра уже запущена\r\n\r\n",39);
         shutdown(fd,2);
         close(fd);
       }
@@ -149,7 +149,7 @@ void gameserv(int port,int maxpl)
       /* parent */
       
       game(fdlist,maxpl);
-      write(0,"\nИгра Окончена!\n\n",17);
+      write(0,"\nКонец игры!\n\n",24);
       if (kill(pid,9)==-1)
       {
         perror("kill");
@@ -169,14 +169,14 @@ int main(int argc,char **argv)
     maxpl=strtoint(argv[2]);
     if ((port<0)||(maxpl<=0))
     {
-      printf("неправильные параметры \n");
+      printf("Неправильные параметры\n");
       exit(1);
     }
     gameserv(port,maxpl);
   }
   else
   {
-    printf("Неверное количество параметров\n");
+    printf("Неправильное количество параметров\n");
     exit(1);
   }
   return 0;

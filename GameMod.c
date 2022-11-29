@@ -7,7 +7,7 @@ int active(struct fdstr *fdlist,int fd,char *com,struct apl **sell,
 
   if (getflag(fd,fdlist)==1)
   {
-    write(fd,"Ваша активность в этом месяце закончилась\r\n\r\n> ",48);
+    write(fd,"активность заверщена\r\n\r\n ",42);
     return 0;
   }
   if (mystrcmp(com,"prod ")==5)
@@ -52,10 +52,10 @@ int answer(struct fdstr *fdlist,int fd,char *com,int mark,struct apl **sell,
     char s[256];
 
     sprintf(s,"%d/%d активных игроков\r\n",count(fdlist),allplayers);
-    sprintf(s+strlen(s),"Продажи банка : минимальная цена\r\n");
+    sprintf(s+strlen(s),"Продажа : минимальная цена за единицу\r\n");
     sprintf(s+strlen(s),"%17.0f %11.0f\r\n",
                        BuySell[mark-1][0]*count(fdlist),BuySell[mark-1][1]);
-    sprintf(s+strlen(s),"Покупки банка:  максимальная цена\r\n");
+    sprintf(s+strlen(s),"покупка : максимальная цена за единицу\r\n");
     sprintf(s+strlen(s),"%17.0f %11.0f\r\n\r\n> ",
                        BuySell[mark-1][2]*count(fdlist),BuySell[mark-1][3]);
     write(fd,s,strlen(s));
@@ -63,7 +63,7 @@ int answer(struct fdstr *fdlist,int fd,char *com,int mark,struct apl **sell,
   }
   if (strcmp("turn\n",com)==0)
   {
-    write(fd,"Ваша активность в этом месяце закончилась\r\n\r\n> ",48);
+    write(fd,"активность заверщена\r\n\r\n ",42);
     if (getflag(fd,fdlist)==0)
     {
       endofturn(fd,fdlist);
@@ -83,7 +83,7 @@ int answer(struct fdstr *fdlist,int fd,char *com,int mark,struct apl **sell,
     }
   }
   if (active(fdlist,fd,com,sell,buy,mark,prodlist)==0) return 0;
-  write(fd,"Неправильная команда. Попробуйте 'help'\r\n\r\n> ",31);
+  write(fd,"Неверная команда, 'help'\r\n\r\n> ",46);
   return 0;
 }
 
@@ -165,7 +165,7 @@ void bankrupt(struct fdstr **fdlist)
   {
     if ((((**fdlist).money)<0)||(((**fdlist).product)<0))
     {			
-			sprintf(s,"\r\nИгрок %d банкрот!!\r\n\r\n",
+			sprintf(s,"\r\nИгрок %d банкрот!\r\n\r\n",
 			                                    getnumber((**fdlist).fd,*fdlist));
 			write((**fdlist).fd,s,strlen(s));
 			write(0,s,strlen(s));
@@ -179,7 +179,7 @@ void bankrupt(struct fdstr **fdlist)
     {
       if ((((*p).money)<0)||((((*p).product))<0))
       {
-				sprintf(s,"\r\nИгрок %d банкрот!!\r\n\r\n",
+				sprintf(s,"\r\nИгрок %d банкрот!\r\n\r\n",
 			                                          getnumber((*p).fd,*fdlist));
 				write((*p).fd,s,strlen(s));
 				write(0,s,strlen(s));
@@ -222,7 +222,7 @@ int commands(struct fdstr **fdlist,fd_set readfds,int *i,int mark,
         struct fdstr *q;
         char s[64];
 
-				sprintf(s,"Игрок %d вышел\r\n\r\n> ",
+				sprintf(s,"Игрок %d потерял связь с сервером\r\n\r\n>",
 					                                                         delnum);
 				q=(*fdlist);
         while (q!=NULL)
@@ -283,7 +283,7 @@ void game(struct fdstr *fdlist,int allplayers) /* from TechMod */
   {
     char s[64];
 
-		sprintf(s,"\r\nИгрок %d выиграл игру!\r\n\r\n",
+		sprintf(s,"\r\nИгрок %d выиграл!\r\n\r\n",
 		                                                      (*fdlist).number);
 		write((*fdlist).fd,s,strlen(s));
 		write(0,s,strlen(s));

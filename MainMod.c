@@ -271,11 +271,11 @@ void playerinfo(int number,struct fdstr *fdlist,int fd)
   {
     if ((*fdlist).number==number)
     {
-      sprintf(s,"Деньги - $%ld\r\n",(*fdlist).money);
+      sprintf(s,"деньги - $%ld\r\n",(*fdlist).money);
       write(fd,s,strlen(s));
       sprintf(s,"Сырье - %d\r\n",(*fdlist).raw);
       write(fd,s,strlen(s));
-      sprintf(s,"Продукция - %d\r\n",(*fdlist).product);
+      sprintf(s,"Продкуция - %d\r\n",(*fdlist).product);
       write(fd,s,strlen(s));
       sprintf(s,"Заводы - %d\r\n",(*fdlist).factory);
       write(fd,s,strlen(s));
@@ -286,7 +286,7 @@ void playerinfo(int number,struct fdstr *fdlist,int fd)
     }
     fdlist=(*fdlist).next;
   }
-  sprintf(s,"Игрок %d банкрот\r\n\r\n",number);
+  sprintf(s,"игрок %d банкрот\r\n\r\n",number);
   write(fd,s,strlen(s));
 }
 
@@ -295,7 +295,7 @@ void newmonth(int *month,struct fdstr *fdlist)
   char s[32];
 
   doline(fdlist);
-  sprintf(s,"\r\nмесяц #%d\r\n\r\n> ", ++(*month));
+  sprintf(s,"\r\nМесяц #%d\r\n\r\n> ",++(*month));
   while (fdlist!=NULL)
   {
     write((*fdlist).fd,s,strlen(s));
@@ -334,7 +334,7 @@ void buildproc(int fd,struct fdstr *fdlist)
     (*q).next=p;
   }
   ((*((*fdlist).buildnum)).kol)++;
-  sprintf(s,"у вас строится %d фабрик\r\n\r\n> ",
+  sprintf(s,"У вас строяться %d заводов\r\n\r\n> ",
                                                (*((*fdlist).buildnum)).kol);
   write(fd,s,strlen(s));
 }
@@ -360,7 +360,7 @@ void addbuysell(int fd,struct fdstr *fdlist,int kol,int price,
     (**list).pl=fdlist;
     (**list).kol=kol;
     (**list).price=price;
-    write(fd,"Ваша заявка была принята\r\n\r\n> ",35);
+    write(fd,"завяка принята\r\n\r\n> ",34);
   }
   else
   {
@@ -372,11 +372,11 @@ void addbuysell(int fd,struct fdstr *fdlist,int kol,int price,
       (*p).kol=kol;
       (*p).price=price;
       (*q).next=p;
-      write(fd,"Ваша заявка была принята\r\n\r\n> ",35);
+      write(fd,"заявка принята\r\n\r\n> ",34);
     }
     else
-      write((*fdlist).fd,"Вы можете использовать эту команду один раз за месяц\r\n\r\n",
-			                                                                  42);
+      write((*fdlist).fd,"Можно использовать только раз в месяц\r\n\r\n>",
+			                                                                  75);
   }
 }
 
@@ -403,9 +403,9 @@ void prodproc(struct fdstr *fdlist,int fd,int kol,struct produce **prodlist)
   if (((*p).kol>(*fdlist).factory)||((*p).kol>(*fdlist).raw)||
 	                                          ((*p).kol*2000>(*fdlist).money))
   {
-    write(fd,"У вас недостаточно фабрик, сырья или денег\r\n\r\n> ",61);
+    write(fd,"У вас недостаточно заводов, сырья или денег\r\n\r\n>",84);
     (*p).kol-=kol;
   }
   else
-    write(fd,"Ваша заявка была принята\r\n\r\n> ",35);
+    write(fd,"завяка принята\r\n\r\n> ",35);
 }
