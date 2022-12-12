@@ -547,8 +547,8 @@ for (int i=0; i<5; i++)
                                 build_col = 0;
                                 start->next = build_list; 
                                 build_list = start;
-                                printf("list--\n");
-                                printLinkedList(build_list);
+                                // printf("list--\n");
+                                // printLinkedList(build_list);
                                 while(sell_request>0 && store[1][0] >0){
                                     char sell_msg[100];                    
                                     for(int i = 0 ; i < maxpl ; i++){
