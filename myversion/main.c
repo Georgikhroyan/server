@@ -450,7 +450,6 @@ for (int i=0; i<5; i++)
                             }
                             if(strncmp(buffer,"player",6) == 0){
                                 char player[100] ;
-                                printf("--%d--\n",PlayersInfo[i].turn);
                                 printf("\n\nЗапрос ""player"" от игрока %d\n\n",i);
                                 
                                 if (PlayersInfo[i].alive!=0){
