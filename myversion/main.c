@@ -651,7 +651,8 @@ for (int i=0; i<5; i++)
                                             send(player_list[i],lose_msg,strlen(lose_msg),0);
                                         }
                                     }
-                                    send(player_list[i],"\n\n\nВЫ ПРОИГРАЛИ!\n\n\n",strlen("\n\n\nВЫ ПРОИГРАЛИ!\n\n\n"),0);
+                                    if(player_list[i] != 0){
+                                    send(player_list[i],"\n\n\nВЫ ПРОИГРАЛИ!\n\n\n",strlen("\n\n\nВЫ ПРОИГРАЛИ!\n\n\n"),0);}
                                     bank.alive_players-=1;
                                 }
                             }
