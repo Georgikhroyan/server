@@ -357,8 +357,7 @@ for (int i=0; i<5; i++)
                                                
                                     }}
                             }
-                            if(strncmp(buffer,"build",5) == 0 ){
-                            
+                            if(strncmp(buffer,"build",5) == 0 ){                        
                                 printf("\n\nЗапрос ""build"" от игрока %d\n\n",i);
                                 if (PlayersInfo[i].alive!=0){
                                 if(PlayersInfo[i].turn != 0 ){   
@@ -417,25 +416,20 @@ for (int i=0; i<5; i++)
                                         if(PlayersInfo[i].turn != 0 ){                     
                                             if(atoi(buffer+5) > PlayersInfo[i].factories_work)
                                             {
-                                                send(sd,"\n\n\nНе хватает заводов ! \n\n\n",strlen("\n\n\n Не хватает заводов ! \n\n\n"),0);
-       
+                                                send(sd,"\n\n\nНе хватает заводов ! \n\n\n",strlen("\n\n\n Не хватает заводов ! \n\n\n"),0);      
                                             }
                                             else if(atoi(buffer+5) * 2000 > PlayersInfo[i].money){
-                                                send(sd,"\n\n\nНе хватает денег ! \n\n\n",strlen("\n\n\n Не хватает денег ! \n\n\n"),0);
-                                                
+                                                send(sd,"\n\n\nНе хватает денег ! \n\n\n",strlen("\n\n\n Не хватает денег ! \n\n\n"),0);                                                
                                             }
                                             else if(atoi(buffer+5) > PlayersInfo[i].raw){
-                                                 send(sd,"\n\n\nНе хватает сырья ! \n\n\n",strlen("\n\n\n Не хватает сырья ! \n\n\n"),0);
-                                                 
+                                                 send(sd,"\n\n\nНе хватает сырья ! \n\n\n",strlen("\n\n\n Не хватает сырья ! \n\n\n"),0);           
                                             }
                                             else {
                                                 send(sd,"\n\n\nзаяква принята \n\n\n",strlen("\n\n\nзаяква принята \n\n\n"),0);
                                                 production_list[i] = atoi(buffer+5); 
-                                                PlayersInfo[i].raw -= atoi(buffer+5);
-                                                
+                                                PlayersInfo[i].raw -= atoi(buffer+5);      
                                             }
                                             break;
-
                                     }
                                 }              
                             }                 
@@ -687,6 +681,5 @@ for (int i=0; i<5; i++)
             }  
         } 
     }  
-
-    return 0 ;
+    return 0;
 }
