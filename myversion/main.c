@@ -306,8 +306,7 @@ for (int i=0; i<5; i++)
     //else its some IO operation on some other socket
     for (i = 0; i < maxpl; i++)  
         {  
-            sd = player_list[i];  
-                 
+            sd = player_list[i];               
             if (FD_ISSET( sd , &readfds))  
             {  
                 //Check if it was for closing , and also read the 
@@ -658,6 +657,7 @@ for (int i=0; i<5; i++)
                                             send(player_list[i],lose_msg,strlen(lose_msg),0);
                                         }
                                     }
+                                    send(player_list[i],"\n\n\nВЫ ПРОИГРАЛИ!\n\n\n",strlen("\n\n\nВЫ ПРОИГРАЛИ!\n\n\n"),0);
                                     bank.alive_players-=1;
                                 }
                             }
