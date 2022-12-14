@@ -134,9 +134,7 @@ int main(int argc, char *argv[]){
         sell_list[i][2] = 0;
         build[i][0] = i;
         build[i][1] = 0;
-
     }
-  
   for (int i = 0; i < maxpl; i++)
     {
         production_list[i] = 0;
@@ -375,7 +373,7 @@ for (int i=0; i<5; i++)
                             }
                             if(strncmp(buffer,"sell",4) == 0 ){
                                 if (PlayersInfo[i].alive!=0){
-                                        if(PlayersInfo[i].turn != 0 ){   
+                                        if(PlayersInfo[i].turn != 0 ){                                  
                                             if(atoi(buffer+4)<=0 || atoi(buffer+4)>store[1][0] || atoi(buffer+4) > PlayersInfo[i].production){
                                                 send(sd,"\n\n\nУкажите верное количество !!!!\n\n\n",strlen("\n\n\nУкажите верное количество !!!!\n\n\n"),0);
                                             }
@@ -541,7 +539,7 @@ for (int i=0; i<5; i++)
                                 build_list = start;
                                 // printf("list--\n");
                                 // printLinkedList(build_list);
-                                while(sell_request>0 && store[1][0] >0){
+                                while(sell_request>0){
                                     char sell_msg[100];                    
                                     for(int i = 0 ; i < maxpl ; i++){
                                         if(PlayersInfo[i].alive != 0 ){
@@ -577,7 +575,7 @@ for (int i=0; i<5; i++)
                                 // for(int i = 0;i < maxpl;i++){
                                 //     printf("%d\t %d \t %d\t\n",sell_list[i][0],sell_list[i][1],sell_list[i][2]);
                                 // }
-                                while(buy_requests>0 && store[0][0] >0){
+                                while(buy_requests>0){
                                     char buy_msg[100];
                                     for(int i = 0 ; i < maxpl ; i++){
                                         if(PlayersInfo[i].alive != 0 ){
@@ -624,11 +622,6 @@ for (int i=0; i<5; i++)
                                     if(player_list[i] != 0){
                                     send(player_list[i],info,strlen(info),0);}
                         }
-                            for(int i = 0 ; i < maxpl; i++){
-                                if(PlayersInfo[i].alive != 0 ){
-                                    PlayersInfo[i].money -= PlayersInfo[i].raw * 300 + PlayersInfo[i].production * 500 + PlayersInfo[i].factories_work * 1000;
-                                }
-                            }
                             for(int i = 0 ; i < maxpl ; i++)
                             {
                                 if(production_list[i] != 0){
@@ -639,6 +632,11 @@ for (int i=0; i<5; i++)
                                     send(player_list[i],prod_msg,strlen(prod_msg),0);
                                 }
                             }  
+                            for(int i = 0 ; i < maxpl; i++){
+                                if(PlayersInfo[i].alive != 0 ){
+                                    PlayersInfo[i].money -= PlayersInfo[i].raw * 300 + PlayersInfo[i].production * 500 + PlayersInfo[i].factories_work * 1000;
+                                }
+                            }
                             for(int i = 0 ; i < maxpl ; i++){
                                 int lose;
                                 if (PlayersInfo[i].money <= 0){
@@ -656,12 +654,23 @@ for (int i=0; i<5; i++)
                                     bank.alive_players-=1;
                                 }
                             }
-
+                            if(bank.alive_players == 0){
+                            for(int i = 0 ; i < maxpl ; i++){
+                                    if(player_list[i] != 0)
+                                        {
+                                            char msg_zero[200];
+                                            snprintf(msg_zero,200,"\n\n\n──────── • • • ────────\nВсе игроки проиграли!!\n──────── • • • ────────\n\n\n ");
+                                            send(player_list[i],msg_zero,strlen(msg_zero),0);                                
+                                        }                                  
+                                    }
+                                    exit(0); 
+                            }
                             if(bank.alive_players == 1){
                                 int pob;
                                 for (int i = 0 ; i < maxpl; i++){
                                     if (PlayersInfo[i].alive != 0 ){
                                         pob = i;
+                                        send(player_list[pob],"\n\n\nВы Победили (*/ω\*)\n\n\n",strlen("\n\n\nВы Победили (*/ω\*)\n\n\n"),0);
                                         }
                                     }
                                     for(int i = 0 ; i < maxpl ; i++){
