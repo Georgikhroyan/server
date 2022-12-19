@@ -424,8 +424,7 @@ for (int i=0; i<5; i++)
                                             }
                                             else {
                                                 send(sd,"\n\n\nзаяква принята \n\n\n",strlen("\n\n\nзаяква принята \n\n\n"),0);
-                                                production_list[i] = atoi(buffer+5); 
-                                                PlayersInfo[i].raw -= atoi(buffer+5);      
+                                                production_list[i] = atoi(buffer+5);     
                                             }
                                             break;
                                     }
@@ -559,7 +558,7 @@ for (int i=0; i<5; i++)
                                     }
                                     if(sell_list[seller_num][1] > 0){
                                     PlayersInfo[seller_num].production -= sell_list[seller_num][1];
-                                    PlayersInfo[seller_num].money += min_cost * sell_list[seller_num][1];
+                                    PlayersInfo[seller_num].money += min_cost * sell_list[seller_num][1];      
                                     store[1][0] -= sell_list[seller_num][1];
                                     for(int i = 0 ; i < maxpl ; i++){
                                     if (PlayersInfo[i].alive != 0){
@@ -627,6 +626,7 @@ for (int i=0; i<5; i++)
                                 if(production_list[i] != 0){
                                     PlayersInfo[i].production += production_list[i];
                                     PlayersInfo[i].money -= 2000*production_list[i];
+                                    PlayersInfo[i].raw -=  production_list[i];
                                     char prod_msg[100];
                                     snprintf(prod_msg,100,"\n\n\nБыло создано %d продукции\n\n\n",production_list[i]);
                                     send(player_list[i],prod_msg,strlen(prod_msg),0);
